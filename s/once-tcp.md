@@ -95,7 +95,7 @@ xhr.send('<person><name>Arun</name></person>');
 &emsp;检测之后会发送是实际请求；
 &emsp;`Access-Control-Max-Age 看文章尾部信息。`
 
-- withCredentials（携带cookie）
+- **withCredentials（携带cookie）**
     ```js
         // 携带凭证（cookie）
         const invocation = new XMLHttpRequest();
@@ -105,31 +105,173 @@ xhr.send('<person><name>Arun</name></person>');
     预检请求和Cookie
     CORS 预检请求不能包含Cookie。预检请求的 响应 必须指定Access-Control-Allow-Credentials: true 来表明可以携带凭据进行实际的请求。
   
+### 计算机网络模型
+> 计算机网络的各层及其协议的集合被称为网络的体系结构，按照不同的维度，其常被分为七层、五层、四层网络结构：（每个中间层为其上一层提供功能，其自身功能则由其下一层提供）
+- 七层网络模型（OSI 模型）
+    >PS: 开放式系统互联模型（英语：Open System Interconnection Model，缩写：OSI；简称为OSI模型）是一种概念模型，由国际标准化组织提出，一个试图使各种计算机在世界范围内互连为网络的标准框架。定义于ISO/IEC 7498-1。![OSI](imgs/osi.jpg)  
+    - 应用层（第七层）这一层我们都太熟悉不过了。
+      > 提供为应用软件而设计的接口，以设置与另一应用软件之间的通信。例如：HTTP、HTTPS、FTP、Telnet、SSH、SMTP、POP3等
+    - 表示层（第六层）
+      > 负责数据转换为能与接收者的系统格式兼容并适合传输的格式，比如字符编码与转换，以及数据加密。 
+    - 会话层(负责建立、维持和终止会话)（第五层）
+      > 会话要建立在两个特定的用户之间的连接， 请求信息称为客户端，被请求信息应用称为服务器；根据所采用的协议，会话可能会启动各种故障解决程序。根据所使用的应用程序/协议/硬件，会话可能支持单工，半双工或全双工模式。这层协议主项为网络基本输入输出系统（NetBIOS）和远程过程调用协议（RPC）等等
+      这层可能会出现的问题：  
+        1. 服务器不可用
+        2. 服务器未被正确地配置，例如 Apache 或 PHP 配置
+        3. 会话故障——断连、超时，等等
+    - 传输层（第四层）
+       > 最有名的两个协议是传输控制协议(TCP)和用户数据报协议(UDP);传输层通过将消息分割成多个数据包提供端到端的消息传输，支持面向连接的和无连接的通信。以及、SCTP、SPX、ATP、IL等等。
+       可能会出现的问题：  
+        1. 被封锁的端口——检查你的访问控制列表（ACL，Access Control List）和防火墙
+        2. 服务质量。
+    - 网络层（第三层）
+      > 有时也译为网际层，它负责为两台主机提供通信服务，并通过选择合适的路由将数据传递到目标主机。 例如IP、ICMP、IPX、BGP、OSPF、RIP、IGRP、EIGRP、ARP、RARP、X.25
+      可能会出现的问题  
+        1. IP 地址配置不正确
+        2. 路由器或其它节点故障或无功能
+    - 数据链路层（第二层）
+      > 数据链路层允许局域网内的各节点彼此相互通信。这一层建立了线路规划、流量控制和错误控制的基础。 例如以太网、令牌环、HDLC、帧中继、ISDN、ATM、IEEE 802.11、FDDI、PPP
+        可能会出现的问题  
+        1. 两个节点间的连接（会话）不成功
+        2. 帧冲突
+        3. 成功建立但又间歇性失败的会话
+    - 物理层（第一层）
+        > 在局域网上发送数据帧（Data Frame），它负责管理电脑通信设备和网络媒体之间的互通。包括了针脚、电压、线缆规范、集线器、中继器、网卡、主机接口卡等。
+        会出现的问题  
+        1. 设备故障
+        2. 电缆无效？
+        3. 等等（82年大头电脑...）
+- 四层网络模型（IPS）
+    > PS: 互联网协议套件（英语：Internet Protocol Suite，缩写IPS）是网络通信模型，以及整个网络传输协议家族，为网际网络的基础通信架构。它常通称为TCP/IP协议族（英语：TCP/IP Protocol Suite，或TCP/IP Protocols），简称TCP/IP; ![协议族](./imgs/tcp.jpg)  
+- 五层网络模型（TCP）
+  - 应用层
+  - 传输层
+  - 网络层
+  - 数据连接层
+  - 物理层
 
 
+- DNS如何解析成数字IP？
+    ![url enter](imgs/how-route-53-routes-traffic.png)‘
+    1. 用户打开 Web 浏览器，在地址栏中输入 www.example.com，然后按 Enter 键。  
+    2. www.example.com 的请求被路由到 DNS 解析程序，这一般由用户的互联网服务提供商 (ISP) 进行管理，例如有线 Internet 服务提供商、DSL 宽带提供商或公司网络。
+    3. ISP 的 DNS 解析程序将 www.example.com 的请求转发到 DNS 根名称服务器。
+    4. ISP 的 DNS 解析程序再次转发 www.example.com 的请求，这次转发到 .com 域的一个 TLD 名称服务器。.com 域的名称服务器使用与 example.com 域相关的四个 Amazon Route 53 名称服务器的名称来响应该请求。
+    5. ISP 的 DNS 解析程序选择一个 Amazon Route 53 名称服务器，并将 www.example.com 的请求转发到该名称服务器。
+    6. Amazon Route 53 名称服务器在 example.com 托管区域中查找 www.example.com 记录，获得相关值，例如，Web 服务器的 IP 地址 (192.0.2.44)，并将 IP 地址返回至 DNS 解析程序。
+    7. ISP 的 DNS 解析程序最终获得用户需要的 IP 地址。解析程序将此值返回至 Web 浏览器。DNS 解析程序还会将 example.com 的 IP 地址缓存 (存储) 您指定的时长，以便它能够在下次有人浏览 example.com 时更快地作出响应。有关更多信息，请参阅存活期 (TTL)。
+    8. Web 浏览器将 www.example.com 的请求发送到从 DNS 解析程序中获得的 IP 地址。这是您的内容所处位置，例如，在 Amazon EC2 实例中或配置为网站端点的 Amazon S3 存储桶中运行的 Web 服务器。
+    9. 192.0.2.44 上的 Web 服务器或其他资源将 www.example.com 的 Web 页面返回到 Web 浏览器，且 Web 浏览器会显示该页面。
+
+
+
+- 三次握手，四次挥手
+  
 #### H5 Q2
 
 
 
 ### 预检请求字段与其他相关字段：(Response)
-|key|value|explain|
-|:--------:|:--:|:--:|
-Access-Control-Request-Method|POST,GET| 说明服务器允许客户端使用 POST 和 GET 方法发起请求（与 Allow 响应首部类似，但其具有严格的访问控制）。
-Access-Control-Request-Headers| X-PINGOTHER, Content-Type|表明服务器允许请求中携带字段 X-PINGOTHER 与 Content-Type
-Access-Control-Max-Age|86400|表明该响应的有效时间为86400秒，也就是24小时，有效时间内无需发送第二次预检请求。
-Access-Control-Allow-Origin|* \| 单个 \| 列表|可以允许哪些客户端来访问，指可以是*，也可以是某个域名或者用逗号隔开的域名列表。
-Access-Control-Expose-Headers|-|浏览器可以访问的一些头部。
-Access-Control-Allow-Credentials| boolean|表示是否允许发送Cookie；。这个值也只能设为true，如果服务器不要浏览器发送Cookie，删除该字段即可。
+|               key                |           value           |                                               explain                                                |
+| :------------------------------: | :-----------------------: | :--------------------------------------------------------------------------------------------------: |
+|  Access-Control-Request-Method   |         POST,GET          | 说明服务器允许客户端使用 POST 和 GET 方法发起请求（与 Allow 响应首部类似，但其具有严格的访问控制）。 |
+|  Access-Control-Request-Headers  | X-PINGOTHER, Content-Type |                       表明服务器允许请求中携带字段 X-PINGOTHER 与 Content-Type                       |
+|      Access-Control-Max-Age      |           86400           |           表明该响应的有效时间为86400秒，也就是24小时，有效时间内无需发送第二次预检请求。            |
+|   Access-Control-Allow-Origin    |     * \| 单个 \| 列表     |           可以允许哪些客户端来访问，指可以是*，也可以是某个域名或者用逗号隔开的域名列表。            |
+|  Access-Control-Expose-Headers   |             -             |                                      浏览器可以访问的一些头部。                                      |
+| Access-Control-Allow-Credentials |          boolean          |   表示是否允许发送Cookie；。这个值也只能设为true，如果服务器不要浏览器发送Cookie，删除该字段即可。   |
 
 ### HTTP 请求首部字段：(Request)
-|key|value|explain|
-|:--------:|:--:|:--:|
-Origin| URI |origin 参数的值为源站 URI。它不包含任何路径信息，只是服务器名称; <font color=#ccc>PS:有时候将该字段的值设置为空字符串是有用的，例如，当源站是一个 data URL 时。</font>
-Access-Control-Request-Method|method|首部字段用于预检请求。其作用是，将实际请求所使用的 HTTP 方法告诉服务器。
-Access-Control-Request-Headers|field-name[,field-name]|首部字段用于预检请求。其作用是，将实际请求所携带的首部字段告诉服务器。
+|              key               |          value          |                                                                                explain                                                                                 |
+| :----------------------------: | :---------------------: | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------: |
+|             Origin             |           URI           | origin 参数的值为源站 URI。它不包含任何路径信息，只是服务器名称; <font color=#ccc>PS:有时候将该字段的值设置为空字符串是有用的，例如，当源站是一个 data URL 时。</font> |
+| Access-Control-Request-Method  |         method          |                                                首部字段用于预检请求。其作用是，将实际请求所使用的 HTTP 方法告诉服务器。                                                |
+| Access-Control-Request-Headers | field-name[,field-name] |                                                 首部字段用于预检请求。其作用是，将实际请求所携带的首部字段告诉服务器。                                                 |
 
+### Other 
+1. HTTP keep-alive和 TCP keep-alive的区别?
+    - TCP keep-alive
+        >指的是TCP保活计时器（keepalive timer）。设想有这样的情况：客户已主动与服务器建立了TCP连接。但后来客户端的主机突然出故障。显然，服务器以后就不能再收到客户发来的数据。因此，应当有措施使服务器不要再白白等待下去。这就是使用保活计时器。服务器每收到一次客户的数据，就重新设置保活计时器，时间的设置通常是两小时。若两小时没有收到客户的数据，服务器就发送一个探测报文段，以后则每隔75秒发送一次。若一连发送10个探测报文段后仍无客户的响应，服务器就认为客户端出了故障，接着就关闭这个连接。
+        ——摘自谢希仁《计算机网络》[WIKI文献](https://zh.wikipedia.org/wiki/Keepalive)。
+        ```
+        sudo sysctl -a | grep keepalive
+        // 每隔 7200 s 检测一次; 存活时长即空闲时，两次传输存活包的持续时间。TCP存活包时长可手动配置，默认不少于2个小时。
+        net.ipv4.tcp_keepalive_time = 7200
+        // 存活重试次数即在判断远程主机不可用前的发送存活包次数。当两个主机透过TCP/IP协议相连时，TCP存活包可用于判断连接是否可用，并按需中断。
+        net.ipv4.tcp_keepalive_probes = 9
+        // 每个包的间隔重传间隔 75 s 存活间隔即未收到上个存活包时，两次连续传输存活包的时间间隔。
+        net.ipv4.tcp_keepalive_intvl = 75
+        ```
+    - HTTP keep-alive
+        >我们知道HTTP协议采用“请求-应答”模式，当使用普通模式，即非KeepAlive模式时，每个请求/应答客户和服务器都要新建一个连接，完成之后立即断开连接（HTTP协议为无连接的协议）；当使用Keep-Alive模式（又称持久连接、连接重用）时，Keep-Alive功能使客户端到服务器端的连接持续有效，当出现对服务器的后继请求时，Keep-Alive功能避免了建立或者重新建立连接;[文献](https://zh.wikipedia.org/wiki/HTTP%E6%8C%81%E4%B9%85%E8%BF%9E%E6%8E%A5)。
+        ![参考](./imgs/langzh-2560px-HTTP_persistent_connection.svg.png)
 
-Access-Control-Request-Method|
+        *注：使用在“Connection”头部信息中使用关键字“Keep-Alive”来指示连接应保持开启以接收之后的信息（这是HTTP 1.1中的默认情形，而HTTP 1.0默认将为每对请求/回复对创建新连接）。尽管名字相近，其功能却大相径庭。*
+        #### 优势
+            1. 较少的CPU和内存的使用（由于同时打开的连接的减少了）  
+            2. 允许请求和应答的HTTP流水线  
+            3. 降低拥塞控制 （TCP连接减少了）  
+            4. 减少了后续请求的延迟（无需再进行握手）  
+            5. 报告错误无需关闭TCP连接  
+        #### 劣势
+            1. 对于现在的广泛普及的宽带连接来说，Keep-Alive也许并不像以前一样有用。web服务器会保持连接若干秒（Apache中默认15秒），这与提高的性能相比也许会影响性能。  
+            2. 对于单个文件被不断请求的服务（例如图片存放网站），Keep-Alive可能会极大的影响性能，因为它在文件被请求之后还保持了不必要的连接很长时间。
 
+2. 浏览器输入URL之后的过程是什么？
+3. TCP与UDP的对比 （运输层）
+    - TCP是单播，而UDP是单播，1对多播， 一对全播。
+    - TCP 协议是一种面向连接的、可靠的数据传输服务；UDP 协议是无连接的、不可靠的。
+       - TCP特点
+         1. 双方在连接建立之后，都可以在任何时候进行数据发送（连接的三路问候，关闭的四路问候）
+         2. 有缓存，发送和接收时都可以利用缓存临时存放数据
+         3. TCP 是面向字节流的
+         4. 提供拥塞控制
+         5. 可靠传输
+         6. TCP提供全双工通信(socket、websocket)
+       - UDP特点
+         1. **面向无连接**
+            > 首先 UDP 是不需要和 TCP一样在发送数据前进行三次握手建立连接的，想发数据就可以开始发送了。并且也只是数据报文的搬运工，不会对数据报文进行任何拆分和拼接操作。
+            具体来说就是：
+                1. 在发送端，应用层将数据传递给传输层的 UDP 协议，UDP 只会给数据增加一个 UDP 头标识下是 UDP 协议，然后就传递给网络层了
+                2. 在接收端，网络层将数据传递给传输层，UDP 只去除 IP 报文头就传递给应用层，不会任何拼接操作
+ 
+         2. 因为无连接所以不可靠; 可能会导致数据丢失，也不管对方是否接受到数据信息
+            > 再者网络环境时好时坏，但是 UDP 因为没有拥塞控制，一直会以恒定的速度发送数据。即使网络条件不好，也不会对发送速率进行调整。这样实现的弊端就是在网络条件不好的情况下可能会导致丢包，但是优点也很明显，在某些实时性要求高的场景（比如电话会议）就需要使用 UDP 而不是 TCP。 
+         3. UDP 是面向报文的
+            > 发送方的UDP对应用程序交下来的报文，在添加首部后就向下交付IP层。UDP对应用层交下来的报文，既不合并，也不拆分，而是保留这些报文的边界。因此，应用程序必须选择合适大小的报文
+         4. 支持 n 对 n 的交互通信（1V1，1Vn，nV1，nVn）;
+         5. UDP 无拥塞控制。
+            头部开销小，传输数据报文时是很高效的;  
+            UDP 头部包含了以下几个数据：
+            - 两个十六位的端口号，分别为源端口（可选字段）和目标端口
+            - 整个数据报文的长度
+            - 整个数据报文的检验和（IPv4 可选 字段），该字段用于发现头部信息和数据中的错误
+    - 场景适用： 
+      - TCP(文件传输，im信息保全)
+      - UDP(IP电话、视频会议、直播)
 ### 参考文献
 - [Fetch](https://fetch.spec.whatwg.org/#http-cors-protocol)
+- [TCP/IP](https://zh.wikipedia.org/wiki/TCP/IP%E5%8D%8F%E8%AE%AE%E6%97%8F)
+- [OSI](https://zh.wikipedia.org/wiki/OSI%E6%A8%A1%E5%9E%8B)
+- [TCP 存活](https://zh.wikipedia.org/wiki/Keepalive)
+- [DNS？](https://aws.amazon.com/cn/route53/what-is-dns/)
+- [osi-modal-layer](https://chinese.freecodecamp.org/news/osi-model-networking-layers/)
+
+
+1. ajax
+2. http
+3. tcp
+4. udp
+5. 三次握手
+6. 四次挥手
+7. dns解析过程
+8. 浏览器如何渲染页面
+9. 输入URL之后发生了什么
+10. 计算机网络模型
+11. 简单请求
+12. 非简单请求
+13. 同源策略
+14. CORS及延伸出来的http头部字段
+15. 预检请求
+16. UDP的API与之场景， socket、websocket？
+17. 
