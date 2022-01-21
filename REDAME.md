@@ -1,5 +1,5 @@
 <center>Review--重拾</center>  
-<p align="center"><div width="100" style="background-image:url(https://github.com/lianglei-git/review/blob/master/s/imgs/logo.png), linear-gradient(rgba(0, 110, 255, 0.705), #00ffff);background-blend-mode: lighten;background-size: cover;"></div ></p>
+<p align="center"><div style="width:100px;background-image:url(https://github.com/lianglei-git/review/blob/master/s/imgs/logo.png), linear-gradient(rgba(0, 110, 255, 0.705), #00ffff);background-blend-mode: lighten;background-size: cover;"></div></p>
 <font size=2><center>其篇文本根为个人之内省。</center></font>
 <br>
 
