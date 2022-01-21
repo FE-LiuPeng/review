@@ -1,11 +1,10 @@
 <center>Review--重拾</center>  
-<p align="center"><div style="width:100px;background-image:url(https://github.com/lianglei-git/review/blob/master/s/imgs/logo.png), linear-gradient(rgba(0, 110, 255, 0.705), #00ffff);background-blend-mode: lighten;background-size: cover;"></div></p>
 <font size=2><center>其篇文本根为个人之内省。</center></font>
 <br>
 
 >《礼记·学记》有云：“独学而无友，则孤陋而寡闻。”有鉴于此，笔者只好梳理实务的心得，分享自己的经验教训，接受读者的评判，走出“独学”的樊笼，拾起行业期内“review”之笔。
 
-1
+
 #### 纲要
 - [简单了解TCP](https://github.com/lianglei-git/review/blob/master/s/once-tcp.md)
 - [Hooks?](https://github.com/lianglei-git/review/blob/master/s/once-hooks.md)
