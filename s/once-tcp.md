@@ -151,8 +151,9 @@ xhr.send('<person><name>Arun</name></person>');
   - 物理层
 
 
-- DNS如何解析成数字IP？
-    ![url enter](imgs/how-route-53-routes-traffic.png)‘
+- DNS如何解析成数字IP？（浏览器无缓存情况下）
+    ![url enter](imgs/how-route-53-routes-traffic.png)
+    > DNS基于UDP协议，有缓存情况下：浏览器缓存 —>> 本地hosts文件 —>> 本地DNS解析器 —>>本地DNS服务器 —>> 其他域名服务器请求
     1. 用户打开 Web 浏览器，在地址栏中输入 www.example.com，然后按 Enter 键。  
     2. www.example.com 的请求被路由到 DNS 解析程序，这一般由用户的互联网服务提供商 (ISP) 进行管理，例如有线 Internet 服务提供商、DSL 宽带提供商或公司网络。
     3. ISP 的 DNS 解析程序将 www.example.com 的请求转发到 DNS 根名称服务器。

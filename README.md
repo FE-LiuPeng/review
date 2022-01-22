@@ -1,5 +1,5 @@
-<center>Review--重拾</center>  
-<font size=2><center>其篇文本根为个人之内省。</center></font>
+<p align='center'>Review</p>  
+<p align='center'><font size=2>其篇文本根为个人之内省。</font></p>
 <br>
 
 >《礼记·学记》有云：“独学而无友，则孤陋而寡闻。”有鉴于此，笔者只好梳理实务的心得，分享自己的经验教训，接受读者的评判，走出“独学”的樊笼，拾起行业期内“review”之笔。
