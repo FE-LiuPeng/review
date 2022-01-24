@@ -11,30 +11,19 @@
 <body>
 
     <button id='Self'>click me</button>
-
 </body>
 <script>
-    const throttle = (fn, delay) => {
-        let time = false;
 
-        return function () {
-            if (time) return
-            time = true
-            setTimeout(() => {
-                time = false
-                fn()
-            }, delay)
-        }
-
+    const ab = (arr) => {
+        return arr.reduce((t, i) => {
+            if(Array.isArray(i)) {
+                t = t.concat(ab(i))
+            }else {
+                t.push(i)
+            }
+            return t;
+        }, [])
     }
-
-    const func = throttle(() => {
-        console.log(123123)
-    }, 500)
-
-    Self.addEventListener('click', () => {
-        func()
-    })
 </script>
 
 </html>
