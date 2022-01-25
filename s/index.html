@@ -14,16 +14,13 @@
 </body>
 <script>
 
-    const ab = (arr) => {
-        return arr.reduce((t, i) => {
-            if(Array.isArray(i)) {
-                t = t.concat(ab(i))
-            }else {
-                t.push(i)
-            }
-            return t;
-        }, [])
-    }
+Function.prototype.myCall = (context = window) => {
+    context.fn = this;
+    let arg = [...arguments].slice(1);
+    let res = context.fn(...arg);
+    delete context.fn;
+    return res
+}
 </script>
 
 </html>
