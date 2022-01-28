@@ -7,6 +7,8 @@
 
 #### 纲要
 - [简单了解TCP](https://github.com/lianglei-git/review/blob/master/s/once-tcp.md)
+- [简单了解Http](https://github.com/lianglei-git/review/blob/master/s/once-http.md)
+- [手写code](https://github.com/lianglei-git/review/blob/master/s/once-writeCode.md)
 - [Hooks?](https://github.com/lianglei-git/review/blob/master/s/once-hooks.md)
 
 
