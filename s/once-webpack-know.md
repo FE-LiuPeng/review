@@ -46,24 +46,64 @@
 借鉴大佬之文。 [作者：ITEM](https://juejin.cn/post/7023242274876162084)  
 -  resolve 配置（公共路径）
    -  modules 告诉 webpack 解析模块时应该搜索的目录，常见配置如下
-    ```js 
-    const path = require('path');
+        ```js 
+        const path = require('path');
 
-    // 路径处理方法
-    function resolve(dir){
-        return path.join(__dirname, dir);
-    }
+        // 路径处理方法
+        function resolve(dir){
+            return path.join(__dirname, dir);
+        }
 
-    const config = {
-        //...
-        resolve: {
-            modules: [resolve('src'), 'node_modules'],
-        },
-    };
-    ///告诉 webpack 优先 src 目录下查找需要解析的文件，会大大节省查找时间
-    ```
+        const config = {
+            //...
+            resolve: {
+                modules: [resolve('src'), 'node_modules'],
+            },
+        };
+        ///告诉 webpack 优先 src 目录下查找需要解析的文件，会大大节省查找时间
+        ```
    - resolveLoader
+        > 一般情况下， 你需要下载 各种各样的loader 来进行代码匹配处理规则，但 当我们要使用自己的开发的loader时， 总不能现发布一个npm包吧， 这就是一个连接器。
+        这个就是加载本地的loder。
+        ```js
+        const path = require('path');
 
+        // 路径处理方法
+        function resolve(dir){
+        return path.join(__dirname, dir);
+        }
+
+        const config = {
+        //...
+        resolveLoader: {
+            modules: ['node_modules',resolve('loader')]
+        },
+        };
+
+        ```
+   - externals
+      > `externals` 配置选项提供了「从输出的 bundle 中排除依赖」的方法。此功能通常对 library 开发人员来说是最有用的，然而也会有各种各样的应用程序用到它。  
+
+        例如，从 CDN 引入 jQuery，而不是把它打包：
+        ```js
+            // 引入
+            <script
+                src="https://code.jquery.com/jquery-3.1.0.js"
+                integrity="sha256-slogkvB1K3VOkzAI8QITxV3VzpOnkeNVsKvtkYLMjfk="
+                crossorigin="anonymous"
+            ></script>
+            // 配置
+            const config = {
+                //...
+                externals: {
+                    jquery: 'jQuery',
+                },
+            };
+
+            // 使用
+            import $ from 'jquery';
+            $('.my-element').animate(/* ... */);
+        ```
 #### Hash值
 | 占位符      | 解释                                                                                   |
 | ----------- | -------------------------------------------------------------------------------------- |
