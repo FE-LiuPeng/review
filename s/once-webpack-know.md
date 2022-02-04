@@ -84,7 +84,7 @@
    - externals
       > `externals` 配置选项提供了「从输出的 bundle 中排除依赖」的方法。此功能通常对 library 开发人员来说是最有用的，然而也会有各种各样的应用程序用到它。  
 
-        例如，从 CDN 引入 jQuery，而不是把它打包：
+     - 例如，从 CDN 引入 jQuery，而不是把它打包：
         ```js
             // 引入
             <script
@@ -104,6 +104,51 @@
             import $ from 'jquery';
             $('.my-element').animate(/* ... */);
         ```
+     - 更精准的使用
+        > 在配置 loader 的时候，我们需要更精确的去指定 loader 的作用目录或者需要排除的目录，通过使用 include 和 exclude 两个配置项，可以实现这个功能，常见的例如：
+        1. include：符合条件的模块进行解析
+        2. exclude：排除符合条件的模块，不解析
+        3. exclude 优先级更高
+        ```js
+            const path = require('path');
+            // 路径处理方法
+            function resolve(dir){
+            return path.join(__dirname, dir);
+            }
+
+            const config = {
+            //...
+            module: { 
+                noParse: /jquery|lodash/,
+                rules: [
+                {
+                    test: /\.js$/i,
+                    include: resolve('src'),
+                    exclude: /node_modules/,
+                    use: [
+                    'babel-loader',
+                    ]
+                },
+                // ...
+                ]
+            }
+            };
+        ``` 
+     - noParse
+       不需要解析依赖的第三方大型类库等，可以通过这个字段进行配置，以提高构建速度；使用 noParse 进行忽略的模块文件中不会解析 import、require 等语法
+       ```js
+        const config = {
+        //...
+        module: { 
+            noParse: /jquery|lodash/,
+            rules:[...]
+        }
+
+        };
+       ``` 
+   - 3
+   - 4
+   - 5
 #### Hash值
 | 占位符      | 解释                                                                                   |
 | ----------- | -------------------------------------------------------------------------------------- |
