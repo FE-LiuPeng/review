@@ -146,9 +146,105 @@
 
         };
        ``` 
-   - 3
-   - 4
-   - 5
+   - 多进程配置
+      > 注意：实际上在小型项目中，开启多进程打包反而会增加时间成本，因为启动进程和进程间通信都会有一定开销。
+      - thread-loader
+        ```js
+            // npm i -D  thread-loader 
+            const path = require('path');
+
+            // 路径处理方法
+            function resolve(dir){
+            return path.join(__dirname, dir);
+            }
+
+            const config = {
+            //...
+            module: { 
+                noParse: /jquery|lodash/,
+                rules: [
+                {
+                    test: /\.js$/i,
+                    include: resolve('src'),
+                    exclude: /node_modules/,
+                    use: [
+                    {
+                        loader: 'thread-loader', // 开启多进程打包
+                        options: {
+                        worker: 3,
+                        }
+                    },
+                    'babel-loader',
+                    ]
+                },
+                // ...
+                ]
+            }
+            };
+
+        ``` 
+      -  happypack
+        > 同样为开启多进程打包的工具，webpack5 已弃用。  
+   - 利用缓存(利用缓存可以大幅提升重复构建的速度)
+     -  babel-loader 开启缓存
+        ```v
+            babel 在转译 js 过程中时间开销比价大，将 babel-loader 的执行结果缓存起来，重新打包的时候，直接读取缓存
+            缓存位置： node_modules/.cache/babel-loader
+        ```  
+
+        ```js
+        const config = {
+        module: { 
+            noParse: /jquery|lodash/,
+            rules: [
+            {
+                test: /\.js$/i,
+                include: resolve('src'),
+                exclude: /node_modules/,
+                use: [
+                // ...
+                {
+                    loader: 'babel-loader',
+                    options: {
+                    cacheDirectory: true // 启用缓存
+                    }
+                },
+                ]
+            },
+            // ...
+            ]
+        }
+        }
+        ```
+        那其他的 loader 如何将结果缓存呢？cache-loader 就可以帮我们完成这件事情
+     -  cache-loader  
+        ` npm i -D cache-loader `  
+        ```js
+        const config = {
+        module: { 
+            // ...
+            rules: [
+            {
+                test: /\.(s[ac]|c)ss$/i, //匹配所有的 sass/scss/css 文件
+                use: [
+                // 'style-loader',
+                MiniCssExtractPlugin.loader,
+                'cache-loader', // 获取前面 loader 转换的结果
+                'css-loader',
+                'postcss-loader',
+                'sass-loader', 
+                ]
+            }, 
+            // ...
+            ]
+        }
+        }
+
+        ```
+     - 2
+     - 3
+     - 4
+   - 
 #### Hash值
 | 占位符      | 解释                                                                                   |
 | ----------- | -------------------------------------------------------------------------------------- |
