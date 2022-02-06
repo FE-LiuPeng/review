@@ -241,8 +241,17 @@
         }
 
         ```
-     - 2
-     - 3
+     - hard-source-webpack-plugin
+      > hard-source-webpack-plugin 为模块提供了中间缓存，重复构建时间大约可以减少 80%，但是在 webpack5 中已经内置了模块缓存，不需要再使用此插件 
+     -  cache 持久化缓存
+        通过配置 cache 缓存生成的 webpack 模块和 chunk，来改善构建速度。
+        ```js
+          const config = {
+            cache: {
+              type: 'filesystem',
+            },
+          };
+        ``` 
      - 4
    - 
 #### Hash值
