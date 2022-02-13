@@ -824,8 +824,12 @@
 
   我们使用的Vue.nextTick,this.$nextTick都是nextTick一样的，但是在vue3里面，可能this要通过getCurrentInstance去过去ctx, 然后调用ctx.$nextTick, 其实整体的流程也还算简单，vue内部有一个事件队列，初始化、视图更新的时候就放进队列一些时间，按顺序执行，只是把nextTick的回掉函数放到了视图更新后的一个事件里面， 然后再继续执行下面的操作， 可以看下queuePostRenderEffect这个注册的事件队列。
 
-- reactive
-- effect
+- reactive， effect
+  我最对这个概念还是处于比较好奇的状态，很巧， 灵巧，牛皮。
+  我个人觉得这个和vue2里面的监听和发布，也没差多少， 只是换了种写法， 概念还是比较相同的， 明天再说... 
+  ```js
+
+  ```
 - 加油服役typescript面试题
 - react fiber
 - Vue3 和 Vue2 响应式区别
